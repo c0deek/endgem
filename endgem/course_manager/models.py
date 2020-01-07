@@ -4,8 +4,7 @@ from django.template.defaultfilters import slugify
 # Create your models here.
 
 class Course(models.Model):
-
-	code = models.CharField(max_length=7, unique=True, default="DEFAULT")
+	code = models.CharField(max_length=7, unique=True)
 	name = models.CharField(max_length=128, unique=True)
 	downloads = models.IntegerField(default=0)
 	slug = models.SlugField(unique=True)
@@ -19,7 +18,7 @@ class Course(models.Model):
 
 class Document(models.Model):
 
-	category = models.ForeignKey(Course, on_delete=models.CASCADE)
+	course = models.ForeignKey(Course, on_delete=models.CASCADE)
 	title = models.CharField(max_length=128)
 	file = models.FileField()
 	downloads = models.IntegerField(default=0)

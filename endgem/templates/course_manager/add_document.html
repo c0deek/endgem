@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>EndGem</title>
+	</head>
+	<body>
+		<h1>Add document</h1>
+		<div>
+				{% if course %}
+					<form id="Document_form" method="post" action="/course/{{ course.slug }}/add_document/">
+						{% csrf_token %}
+						{% for hidden in form.hidden_fields %}
+							{{ hidden }}
+						{% endfor %}
+						{% for field in form.visible_fields %}
+							{{ field.errors }}
+							{{ field.help_text }}
+							{{ field }}
+						{% endfor %}
+						<input type="submit" name="submit" value="Create Document">
+					</form>
+				{% else %}
+					<h3>Course doesn't exist</h3>
+				{% endif %}
+		</div>
+	</body>
+</html>

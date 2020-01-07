@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>EndGem</title>
+	</head>
+	<body>
+		<div>
+		{% if course %}
+			<h1>{{ course.name }}</h1>
+			{% if documents %}
+				<ul>
+				{% for document in documents %}
+					<li><a href="{{ document.url }}">{{ document.title }}</a></li>
+				{% endfor %}
+				</ul>
+			{% else %}
+				<strong>No documents currently in this course.</strong>
+			{% endif %}
+		{% else %}
+			The specified course does not exist!
+		{% endif %}
+		<a href="/">Back to index page</a>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html>
+<head>
+	<title>EndGem</title>
+</head>
+<body>
+	<div>hey partner! <br /></div>
+	{% if courses %}
+	<h3>Course with most downloaded files</h3>
+	<ul>
+		{% for course in courses %}
+			<li><a href="course/{{ course.slug }}">{{ course.name }}</li></a>
+		{% endfor %}
+	</ul>
+	{% else %}
+		<strong>There are no categories present</strong>
+	{% endif %}
+	{% if documents %}
+	<h3>Most downloaded documents</h3>
+	<ul>
+		{% for document in documents %}
+			<li><a href="#">{{ document.title }}</li></a> <!-- {{ document.url }} -->
+		{% endfor %}
+	</ul>
+	{% else %}
+		<strong>There are no documents present</strong>
+	{% endif %}
+	<div>
+		<a href="/add_course">Add Course</a>
+	</div>
+</body>
+</html>
