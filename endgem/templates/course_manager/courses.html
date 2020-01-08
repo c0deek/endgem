@@ -1,25 +1,26 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>EndGem</title>
-	</head>
-	<body>
-		<div>
-		{% if course %}
-			<h1>{{ course.name }}</h1>
-			{% if documents %}
-				<ul>
-				{% for document in documents %}
-					<li><a href="{{ document.url }}">{{ document.title }}</a></li>
-				{% endfor %}
-				</ul>
-			{% else %}
-				<strong>No documents currently in this course.</strong>
-			{% endif %}
+{% extends 'course_manager/base.html' %}
+
+{% block title %}EndGem{% endblock %}
+
+{% block content %}
+	{% if course %}
+		<h3>{{ course.name }}</h3>
+		{% if documents %}
+			<ul class="list-group">
+			{% for document in documents %}
+				<li class="list-group-item d-flex justify-content-between align-items-center">
+			      <a href="#">{{ document.title }}</a>
+			      <span class="badge badge-primary badge-pill download_count">{{ document.downloads }}</span>
+			      <a class="downloads glyphicon glyphicon-save btn btn-dark" href="/{{ document.title }}/download"></a>
+			    </li>
+			{% endfor %}
+			</ul>
 		{% else %}
-			The specified course does not exist!
+			<strong>No documents currently in this course.</strong>
 		{% endif %}
-		<a href="/">Back to index page</a>
-		</div>
-	</body>
-</html>
+	{% else %}
+		The specified course does not exist!
+	{% endif %}
+	<button class="btn btn-dark"><a href="/course/{{ course.slug }}/add_file/">Upload Document</a></button><br>
+	<a href="/">Back to index page</a>
+{% endblock %}

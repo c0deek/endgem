@@ -19,8 +19,8 @@ class Course(models.Model):
 class Document(models.Model):
 
 	course = models.ForeignKey(Course, on_delete=models.CASCADE)
-	title = models.CharField(max_length=128)
-	file = models.FileField()
+	title = models.CharField(max_length=128, unique=True)
+	file = models.FileField(upload_to="../media/files")
 	downloads = models.IntegerField(default=0)
 
 	def __str__(self):

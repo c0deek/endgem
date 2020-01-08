@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Course, Document
 from .forms import CourseForm, DocumentForm
+from django.http import HttpResponse
 
 # Create your views here.
 def index(request):
@@ -39,21 +40,35 @@ def add_course(request):
 
 def add_document(request, course_code_slug):
 	try:
-		course = Course.objects.get(slug=course_name_slug)
+		course = Course.objects.get(slug=course_code_slug)
 	except Course.DoesNotExist:
 		course = None
 
 	form = DocumentForm()
 	if request.method == 'POST':
-		form = DocumentForm(request.POST)
+		form = DocumentForm(request.POST, request.FILES)
 		if form.is_valid():
 			if course:
 				document = form.save(commit = False)
 				document.course = course
 				document.save()
-				return show_course(request, course_name_slug)
+				return redirect(f'course/{course_code_slug}')
 			else:
 				print(form.errors)
 
 	context_dic = {'form': form, 'course': course}
 	return render(request, 'course_manager/add_document.html', context_dic)
+
+
+def download_category(request, title):
+	# course = Course.objects.get(slug=course_slug)
+	file = Document.objects.get(title=title)
+	if file:
+		# if 'downloaded' in request.COOKIES.keys():
+			downloads = file.downloads + 1
+			file.downloads = downloads
+			file.save()
+		# else:
+			# response.set_cookie('downloaded', 1)
+			# return response
+	return index(request)

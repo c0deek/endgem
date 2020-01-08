@@ -13,10 +13,11 @@ class CourseForm(forms.ModelForm):
 		# fields = ('name',)
 
 class DocumentForm(forms.ModelForm):
-	title = forms.CharField(max_length=128, help_text='Document name')
-	file = forms.URLField(max_length=200, help_text='Please enter the URL of the document.')
-	downloads = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+	# title = forms.CharField(max_length=128,)
+	# downloads = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
+	# file = forms.FileField(upload_to="../media/files")
 
 	class Meta:
 		model = Document
+		fields = ('title', 'file')
 		exclude = ('downloads',)
