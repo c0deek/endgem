@@ -12,7 +12,17 @@ def index(request):
 
 	return render (request, 'course_manager/index.html', context=context)
 
-def show_course(request, course_code_slug):
+def show_courses(request):
+	context = {}
+	try:
+		course = Course.objects.all()
+		context['courses'] = course
+	except Course.DoesNotExist:
+		context['courses'] = None
+		
+	return render (request, 'course_manager/courses.html', context=context)
+
+def show_documents(request, course_code_slug):
 	context = {}
 	try:
 		course = Course.objects.get(slug=course_code_slug)
@@ -23,7 +33,7 @@ def show_course(request, course_code_slug):
 		context['documents'] = None
 		context['course'] = None
 
-	return render (request, 'course_manager/courses.html', context=context)
+	return render (request, 'course_manager/documents.html', context=context)
 
 def add_course(request):
 	if request.method == 'POST':
@@ -54,21 +64,27 @@ def add_document(request, course_code_slug):
 				document.save()
 				return redirect(f'course/{course_code_slug}')
 			else:
-				print(form.errors)
+				# print(form.errors)
+				pass
 
 	context_dic = {'form': form, 'course': course}
 	return render(request, 'course_manager/add_document.html', context_dic)
 
 
-def download_category(request, title):
+def download_file(request, title):
 	# course = Course.objects.get(slug=course_slug)
-	file = Document.objects.get(title=title)
-	if file:
+	document = Document.objects.get(title=title)
+	course = document.course
+	print(course.code)
+	if document:
 		# if 'downloaded' in request.COOKIES.keys():
-			downloads = file.downloads + 1
-			file.downloads = downloads
-			file.save()
+			doc_downloads = document.downloads + 1
+			document.downloads = doc_downloads
+			corse_downloads = course.downloads + 1
+			course.downloads = corse_downloads
+			document.save()
+			course.save()
 		# else:
 			# response.set_cookie('downloaded', 1)
 			# return response
-	return index(request)
+	return redirect(f"/media/{ document.file }/")

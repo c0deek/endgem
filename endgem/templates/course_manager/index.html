@@ -8,7 +8,7 @@
 	<ul class="list-group">
 		{% for course in courses %}
 			<li class="list-group-item d-flex justify-content-between align-items-center">
-		      <a href="/course/{{ course.slug }}">{{ course.name }}</a>
+		      <a class="course-name" href="/{{ course.slug }}">{{ course.name }}</a>
 		      <span class="badge badge-primary badge-pill">{{ course.downloads }}</span>
 		    </li>
 		{% endfor %}
@@ -21,8 +21,9 @@
 	<ul class="list-group">
 		{% for document in documents %}
 			<li class="list-group-item d-flex justify-content-between align-items-center">
-		      <a href="#">{{ document.title }}</a>
-		      <span class="badge badge-primary badge-pill">{{ document.downloads }}</span>
+		      	<p class="doc-name" style="display: inline;">{{ document.title }}</p>
+		      	<span class="badge badge-primary badge-pill download_count">{{ document.downloads }}</span>
+			   	<a class="downloads glyphicon glyphicon-save btn btn-dark" target="_blank" href="{{ document.title }}/download"></a>
 		    </li>
 		{% endfor %}
 	</ul>
