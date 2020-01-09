@@ -6,10 +6,10 @@
 	<div>
 		<h1>Add document</h1>
 		{% if course %}
-			<form id="Document_form" method="post" action="/course/{{ course.slug }}/add_file/">
+			<form id="Document_form" method="post" action="/course/{{ course.slug }}/add_file/" enctype="multipart/form-data">
 				{% csrf_token %}
 				{{ form.as_p }}
-				<button type="submit" name="submit" class="btn btn-primary">Add File</button>
+				<input type="submit" value="SUBMIT" class="btn btn-primary">
 			</form>
 		{% else %}
 			<h3>Course doesn't exist</h3>

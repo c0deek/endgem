@@ -26,7 +26,7 @@ def show_documents(request, course_code_slug):
 	context = {}
 	try:
 		course = Course.objects.get(slug=course_code_slug)
-		document = Document.objects.filter(course=course)
+		document = Document.objects.filter(course=course).order_by('-downloads')
 		context['documents'] = document
 		context['course'] = course
 	except Course.DoesNotExist:
@@ -54,7 +54,6 @@ def add_document(request, course_code_slug):
 	except Course.DoesNotExist:
 		course = None
 
-	form = DocumentForm()
 	if request.method == 'POST':
 		form = DocumentForm(request.POST, request.FILES)
 		if form.is_valid():
@@ -62,10 +61,12 @@ def add_document(request, course_code_slug):
 				document = form.save(commit = False)
 				document.course = course
 				document.save()
-				return redirect(f'course/{course_code_slug}')
+				return redirect(f'/{course_code_slug}')
 			else:
 				# print(form.errors)
 				pass
+	else:
+		form = DocumentForm()
 
 	context_dic = {'form': form, 'course': course}
 	return render(request, 'course_manager/add_document.html', context_dic)

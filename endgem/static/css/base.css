@@ -17,4 +17,5 @@ body {
 
 .doc-name, .course-name {
 	padding: 0 3% 0 3%;
+	display: inline;
 }

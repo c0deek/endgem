@@ -9,9 +9,9 @@
 			<ul class="list-group">
 			{% for document in documents %}
 				<li class="list-group-item d-flex justify-content-between align-items-center">
-			      <a href="#">{{ document.title }}</a>
+			      <p class="doc-name" style="display: inline;">{{ document.title }}</p>
 			      <span class="badge badge-primary badge-pill download_count">{{ document.downloads }}</span>
-			      <a class="downloads glyphicon glyphicon-save btn btn-dark" href="/{{ document.title }}/download"></a>
+			      <a class="downloads glyphicon glyphicon-save btn btn-dark" target="_blank" href="/{{ document.title }}/download"></a>
 			    </li>
 			{% endfor %}
 			</ul>

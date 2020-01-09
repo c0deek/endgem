@@ -2,8 +2,8 @@ from django import forms
 from .models import Course, Document
 
 class CourseForm(forms.ModelForm):
-	code = forms.CharField(max_length=7, help_text="e.g. MTN-101 (write in this format only)")
-	name = forms.CharField(max_length=128, help_text="Course Name")
+	code = forms.CharField(max_length=7, label="Course code(format: MTN-101)")
+	name = forms.CharField(max_length=128, label="Course Name")
 	downloads = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
 	slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
